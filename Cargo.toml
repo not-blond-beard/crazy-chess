@@ -1,0 +1,2 @@
+[workspace]
+members = ["chess_engine", "cli-chess"]
