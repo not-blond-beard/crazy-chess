@@ -78,7 +78,7 @@ mod tests {
 
     #[test]
     fn test_white_pawn_single_push() {
-        let white_pawns = 1u64 << 8; // b2
+        let white_pawns = 1u64 << 8;
         let black_pawns = 0;
         let moves = get_pawn_moves(8, white_pawns, black_pawns, Color::White);
 
@@ -88,7 +88,7 @@ mod tests {
 
     #[test]
     fn test_white_pawn_double_push() {
-        let white_pawns = 1u64 << 8; // b2
+        let white_pawns = 1u64 << 8;
         let black_pawns = 0;
         let moves = get_pawn_moves(8, white_pawns, black_pawns, Color::White);
 
@@ -98,8 +98,8 @@ mod tests {
 
     #[test]
     fn test_white_pawn_capture() {
-        let white_pawns = 1u64 << 8; // b2
-        let black_pawns = 1u64 << 17; // c3
+        let white_pawns = 1u64 << 8;
+        let black_pawns = 1u64 << 17;
         let moves = get_pawn_moves(8, white_pawns, black_pawns, Color::White);
 
         let expected = (1u64 << 16) | (1u64 << 24) | (1u64 << 17);
@@ -109,7 +109,7 @@ mod tests {
     #[test]
     fn test_black_pawn_single_push() {
         let white_pawns = 0;
-        let black_pawns = 1u64 << 50; // c7
+        let black_pawns = 1u64 << 50;
         let moves = get_pawn_moves(50, white_pawns, black_pawns, Color::Black);
 
         let expected = (1u64 << 42) | (1u64 << 34);
@@ -119,7 +119,7 @@ mod tests {
     #[test]
     fn test_black_pawn_double_push() {
         let white_pawns = 0;
-        let black_pawns = 1u64 << 50; // c7
+        let black_pawns = 1u64 << 50;
         let moves = get_pawn_moves(50, white_pawns, black_pawns, Color::Black);
 
         let expected = (1u64 << 42) | (1u64 << 34);
@@ -128,8 +128,8 @@ mod tests {
 
     #[test]
     fn test_black_pawn_capture() {
-        let white_pawns = 1u64 << 43; // d6
-        let black_pawns = 1u64 << 50; // c7
+        let white_pawns = 1u64 << 43;
+        let black_pawns = 1u64 << 50;
         let moves = get_pawn_moves(50, white_pawns, black_pawns, Color::Black);
 
         let expected = (1u64 << 42) | (1u64 << 34) | (1u64 << 43);

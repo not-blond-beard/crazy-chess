@@ -59,6 +59,8 @@ fn print_legal_moves(board: &Board, square: usize) {
         Some((PieceType::Pawn, Color::Black)) => "Black Pawn",
         Some((PieceType::Knight, Color::White)) => "White Knight",
         Some((PieceType::Knight, Color::Black)) => "Black Knight",
+        Some((PieceType::Bishop, Color::White)) => "White Bishop",
+        Some((PieceType::Bishop, Color::Black)) => "Black Bishop",
         None => "No piece",
     };
 
@@ -190,6 +192,8 @@ fn run_interactive_mode() {
                     Some((PieceType::Pawn, Color::Black)) => "Black Pawn",
                     Some((PieceType::Knight, Color::White)) => "White Knight",
                     Some((PieceType::Knight, Color::Black)) => "Black Knight",
+                    Some((PieceType::Bishop, Color::White)) => "White Bishop",
+                    Some((PieceType::Bishop, Color::Black)) => "Black Bishop",
                     _ => "Unknown piece",
                 };
 
