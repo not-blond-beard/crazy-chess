@@ -1,2 +1,3 @@
 [workspace]
 members = ["chess_engine", "cli-chess"]
+resolver = "2"
