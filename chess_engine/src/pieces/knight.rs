@@ -75,7 +75,6 @@ pub fn get_knight_moves(
     for target_opt in possible_moves.iter() {
         if let Some(target) = target_opt {
             let target_bb = square_to_bitboard(*target);
-            // 자기 말이 없는 위치만 이동 가능
             if target_bb & own_pieces == 0 {
                 moves |= target_bb;
             }
@@ -104,21 +103,21 @@ mod tests {
             Color::White,
         );
 
-        let expected = (1u64 << 18) | // b4 
-            (1u64 << 20) | // d3
-            (1u64 << 25) | // b6 
-            (1u64 << 41) | // c7 
-            (1u64 << 45) | // g7 
-            (1u64 << 52) | // f6 
-            (1u64 << 50) | // f4 
-            (1u64 << 29); // e3
+        let expected = (1u64 << 18) | 
+            (1u64 << 20) | 
+            (1u64 << 25) | 
+            (1u64 << 41) | 
+            (1u64 << 45) | 
+            (1u64 << 52) | 
+            (1u64 << 50) | 
+            (1u64 << 29);
 
         assert_eq!(moves, expected);
     }
 
     #[test]
     fn test_knight_corner() {
-        let white_knights = 1u64 << 7; // h1
+        let white_knights = 1u64 << 7;
         let white_pieces = white_knights;
         let black_pieces = 0;
 
@@ -131,16 +130,16 @@ mod tests {
             Color::White,
         );
 
-        let expected = (1u64 << 13) | // f2 
-            (1u64 << 22); // g3
+        let expected = (1u64 << 13) | 
+            (1u64 << 22);
 
         assert_eq!(moves, expected);
     }
 
     #[test]
     fn test_knight_with_friendly_blockers() {
-        let white_knights = 1u64 << 35; // d5
-        let white_pawns = (1u64 << 41) | (1u64 << 45); // c7, g7
+        let white_knights = 1u64 << 35;
+        let white_pawns = (1u64 << 41) | (1u64 << 45);
         let white_pieces = white_knights | white_pawns;
         let black_pieces = 0;
 
@@ -153,21 +152,21 @@ mod tests {
             Color::White,
         );
 
-        let expected = (1u64 << 18) | // b4
-            (1u64 << 20) | // d3
-            (1u64 << 25) | // b6
-            (1u64 << 29) | // e3
-            (1u64 << 50) | // f4
-            (1u64 << 52); // f6
+        let expected = (1u64 << 18) | 
+            (1u64 << 20) | 
+            (1u64 << 25) | 
+            (1u64 << 29) | 
+            (1u64 << 50) | 
+            (1u64 << 52);
 
         assert_eq!(moves, expected);
     }
 
     #[test]
     fn test_knight_with_enemy_capture() {
-        let white_knights = 1u64 << 35; // d5
+        let white_knights = 1u64 << 35;
         let white_pieces = white_knights;
-        let black_pawns = (1u64 << 41) | (1u64 << 45); // b6, f6
+        let black_pawns = (1u64 << 41) | (1u64 << 45);
         let black_pieces = black_pawns;
 
         let moves = get_knight_moves(
@@ -179,21 +178,21 @@ mod tests {
             Color::White,
         );
 
-        let expected = (1u64 << 18) | // b4
-            (1u64 << 20) | // d3
-            (1u64 << 25) | // b6
-            (1u64 << 29) | // e3
-            (1u64 << 41) | // c7
-            (1u64 << 45) | // g7
-            (1u64 << 50) | // f4
-            (1u64 << 52); // f6
+        let expected = (1u64 << 18) | 
+            (1u64 << 20) | 
+            (1u64 << 25) | 
+            (1u64 << 29) | 
+            (1u64 << 41) | 
+            (1u64 << 45) | 
+            (1u64 << 50) | 
+            (1u64 << 52);
 
         assert_eq!(moves, expected);
     }
 
     #[test]
     fn test_black_knight() {
-        let black_knights = 1u64 << 35; // d5
+        let black_knights = 1u64 << 35;
         let white_knights = 0;
         let white_pieces = 0;
         let black_pieces = black_knights;
@@ -207,14 +206,14 @@ mod tests {
             Color::Black,
         );
 
-        let expected = (1u64 << 18) | // b4
-            (1u64 << 20) | // d3
-            (1u64 << 25) | // b6
-            (1u64 << 29) | // e3
-            (1u64 << 41) | // c7
-            (1u64 << 45) | // g7
-            (1u64 << 50) | // f4
-            (1u64 << 52); // f6
+        let expected = (1u64 << 18) | 
+            (1u64 << 20) | 
+            (1u64 << 25) | 
+            (1u64 << 29) | 
+            (1u64 << 41) | 
+            (1u64 << 45) | 
+            (1u64 << 50) | 
+            (1u64 << 52);
 
         assert_eq!(moves, expected);
     }
