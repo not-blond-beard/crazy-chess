@@ -5,6 +5,7 @@ use crate::pieces::bishop;
 use crate::pieces::knight;
 use crate::pieces::pawn;
 use crate::pieces::rook;
+use crate::pieces::king;
 use crate::pieces::piece_type::{Color, MoveError, PieceType};
 
 pub struct Board {
@@ -16,6 +17,8 @@ pub struct Board {
     pub black_bishops: u64,
     pub white_rooks: u64,
     pub black_rooks: u64,
+    pub white_kings: u64,
+    pub black_kings: u64,
     pub side_to_move: Color,
 }
 
@@ -30,6 +33,8 @@ impl Board {
             black_bishops: 0x2400_0000_0000_0000, // c8, f8
             white_rooks: 0x0000_0000_0000_0081,   // a1, h1
             black_rooks: 0x8100_0000_0000_0000,   // a8, h8
+            white_kings: 0x0000_0000_0000_0010,   // e1
+            black_kings: 0x1000_0000_0000_0000,   // e8
             side_to_move: Color::White,
         }
     }
@@ -59,6 +64,10 @@ impl Board {
                     " ♖ "
                 } else if self.black_rooks & mask != 0 {
                     " ♜ "
+                } else if self.white_kings & mask != 0 {
+                    " ♔ "
+                } else if self.black_kings & mask != 0 {
+                    " ♚ "
                 } else {
                     if is_dark_square {
                         "░░░"
@@ -75,15 +84,15 @@ impl Board {
         }
         println!("    a   b   c   d   e   f   g   h  ");
         println!();
-        println!("  White: ♙ ♘ ♗ ♖   Black: ♟ ♞ ♝ ♜");
+        println!("  White: ♙ ♘ ♗ ♖ ♔   Black: ♟ ♞ ♝ ♜ ♚");
     }
 
     pub fn white_pieces(&self) -> u64 {
-        self.white_pawns | self.white_knights | self.white_bishops | self.white_rooks
+        self.white_pawns | self.white_knights | self.white_bishops | self.white_rooks | self.white_kings
     }
 
     pub fn black_pieces(&self) -> u64 {
-        self.black_pawns | self.black_knights | self.black_bishops | self.black_rooks
+        self.black_pawns | self.black_knights | self.black_bishops | self.black_rooks | self.black_kings
     }
 
     pub fn all_pieces(&self) -> u64 {
@@ -116,6 +125,10 @@ impl Board {
             Some((PieceType::Rook, Color::White))
         } else if self.black_rooks & bb != 0 {
             Some((PieceType::Rook, Color::Black))
+        } else if self.white_kings & bb != 0 {
+            Some((PieceType::King, Color::White))
+        } else if self.black_kings & bb != 0 {
+            Some((PieceType::King, Color::Black))
         } else {
             None
         }
@@ -154,6 +167,14 @@ impl Board {
                     from,
                     self.white_rooks,
                     self.black_rooks,
+                    self.white_pieces(),
+                    self.black_pieces(),
+                    self.side_to_move,
+                ),
+                PieceType::King => king::get_king_moves(
+                    from,
+                    self.white_kings,
+                    self.black_kings,
                     self.white_pieces(),
                     self.black_pieces(),
                     self.side_to_move,
@@ -219,6 +240,14 @@ impl Board {
                 self.black_rooks &= !from_bb;
                 self.black_rooks |= to_bb;
             }
+            (Color::White, PieceType::King) => {
+                self.white_kings &= !from_bb;
+                self.white_kings |= to_bb;
+            }
+            (Color::Black, PieceType::King) => {
+                self.black_kings &= !from_bb;
+                self.black_kings |= to_bb;
+            }
         }
 
         match self.side_to_move {
@@ -227,12 +256,14 @@ impl Board {
                 self.black_knights &= !to_bb;
                 self.black_bishops &= !to_bb;
                 self.black_rooks &= !to_bb;
+                self.black_kings &= !to_bb;
             }
             Color::Black => {
                 self.white_pawns &= !to_bb;
                 self.white_knights &= !to_bb;
                 self.white_bishops &= !to_bb;
                 self.white_rooks &= !to_bb;
+                self.white_kings &= !to_bb;
             }
         }
 
@@ -257,6 +288,8 @@ mod tests {
         assert_eq!(board.black_bishops, 0x2400_0000_0000_0000);
         assert_eq!(board.white_rooks, 0x0000_0000_0000_0081);
         assert_eq!(board.black_rooks, 0x8100_0000_0000_0000);
+        assert_eq!(board.white_kings, 0x0000_0000_0000_0010);
+        assert_eq!(board.black_kings, 0x1000_0000_0000_0000);
         assert_eq!(board.side_to_move, Color::White);
     }
 
@@ -373,5 +406,35 @@ mod tests {
             Some((PieceType::Rook, Color::Black))
         );
         assert_eq!(board.get_piece_type_at(20), None);
+    }
+
+    #[test]
+    fn test_king_move() {
+        let mut board = Board::new();
+        
+        // 초기 보드를 수정하여 e2의 폰 제거
+        board.white_pawns &= !(1u64 << 12);
+        
+        // e1에 있는 화이트 킹을 e2로 이동
+        board.make_move(4, 12).unwrap();
+        
+        assert_eq!(board.white_kings, 1u64 << 12);
+        assert_eq!(board.side_to_move, Color::Black);
+    }
+
+    #[test]
+    fn test_king_capture() {
+        let mut board = Board::new();
+        
+        // 초기 보드를 수정하여 e2의 화이트 폰 제거하고, e2에 블랙 폰을 배치
+        board.white_pawns &= !(1u64 << 12);
+        board.black_pawns = (board.black_pawns & !(1u64 << 52)) | (1u64 << 12);
+        
+        // e1에 있는 화이트 킹으로 e2에 있는 블랙 폰을 캡처
+        board.make_move(4, 12).unwrap();
+        
+        assert_eq!(board.white_kings, 1u64 << 12);
+        assert_eq!(board.black_pawns & (1u64 << 12), 0);
+        assert_eq!(board.side_to_move, Color::Black);
     }
 }

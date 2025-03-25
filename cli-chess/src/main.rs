@@ -63,6 +63,8 @@ fn print_legal_moves(board: &Board, square: usize) {
         Some((PieceType::Bishop, Color::Black)) => "Black Bishop",
         Some((PieceType::Rook, Color::White)) => "White Rook",
         Some((PieceType::Rook, Color::Black)) => "Black Rook",
+        Some((PieceType::King, Color::White)) => "White King",
+        Some((PieceType::King, Color::Black)) => "Black King",
         None => "No piece",
     };
 
@@ -198,6 +200,8 @@ fn run_interactive_mode() {
                     Some((PieceType::Bishop, Color::Black)) => "Black Bishop",
                     Some((PieceType::Rook, Color::White)) => "White Rook",
                     Some((PieceType::Rook, Color::Black)) => "Black Rook",
+                    Some((PieceType::King, Color::White)) => "White King",
+                    Some((PieceType::King, Color::Black)) => "Black King",
                     _ => "Unknown piece",
                 };
 
