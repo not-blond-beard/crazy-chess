@@ -11,6 +11,7 @@ pub enum PieceType {
     Bishop,
     Rook,
     King,
+    Queen,
 }
 
 #[derive(Debug, PartialEq)]
