@@ -1,2 +1,2 @@
 pub mod check;
-pub mod game_status; 
+pub mod game_status;

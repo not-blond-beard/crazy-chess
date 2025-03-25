@@ -29,13 +29,8 @@ pub fn get_rook_moves(
     }
 
     let mut moves = 0u64;
-    
-    let directions = [
-        (0, 1),
-        (0, -1),
-        (1, 0),
-        (-1, 0),
-    ];
+
+    let directions = [(0, 1), (0, -1), (1, 0), (-1, 0)];
 
     let file = from % 8;
     let rank = from / 8;
@@ -80,32 +75,23 @@ mod tests {
         let white_pieces = white_rooks;
         let black_pieces = 0;
 
-        let moves = get_rook_moves(
-            27,
-            white_rooks,
-            0,
-            white_pieces,
-            black_pieces,
-            Color::White,
-        );
+        let moves = get_rook_moves(27, white_rooks, 0, white_pieces, black_pieces, Color::White);
 
-        let vertical = 
-            (1u64 << 3) | 
-            (1u64 << 11) |
-            (1u64 << 19) |
-            (1u64 << 35) |
-            (1u64 << 43) |
-            (1u64 << 51) |
-            (1u64 << 59);  
+        let vertical = (1u64 << 3)
+            | (1u64 << 11)
+            | (1u64 << 19)
+            | (1u64 << 35)
+            | (1u64 << 43)
+            | (1u64 << 51)
+            | (1u64 << 59);
 
-        let horizontal = 
-            (1u64 << 24) |
-            (1u64 << 25) |
-            (1u64 << 26) |
-            (1u64 << 28) |
-            (1u64 << 29) |
-            (1u64 << 30) |
-            (1u64 << 31);  
+        let horizontal = (1u64 << 24)
+            | (1u64 << 25)
+            | (1u64 << 26)
+            | (1u64 << 28)
+            | (1u64 << 29)
+            | (1u64 << 30)
+            | (1u64 << 31);
 
         let expected = vertical | horizontal;
         assert_eq!(moves, expected);
@@ -117,32 +103,23 @@ mod tests {
         let white_pieces = white_rooks;
         let black_pieces = 0;
 
-        let moves = get_rook_moves(
-            0,
-            white_rooks,
-            0,
-            white_pieces,
-            black_pieces,
-            Color::White,
-        );
+        let moves = get_rook_moves(0, white_rooks, 0, white_pieces, black_pieces, Color::White);
 
-        let vertical = 
-            (1u64 << 8) |
-            (1u64 << 16) |
-            (1u64 << 24) |
-            (1u64 << 32) |
-            (1u64 << 40) |
-            (1u64 << 48) |
-            (1u64 << 56);  
+        let vertical = (1u64 << 8)
+            | (1u64 << 16)
+            | (1u64 << 24)
+            | (1u64 << 32)
+            | (1u64 << 40)
+            | (1u64 << 48)
+            | (1u64 << 56);
 
-        let horizontal = 
-            (1u64 << 1) |
-            (1u64 << 2) |
-            (1u64 << 3) |
-            (1u64 << 4) |
-            (1u64 << 5) |
-            (1u64 << 6) |
-            (1u64 << 7);  
+        let horizontal = (1u64 << 1)
+            | (1u64 << 2)
+            | (1u64 << 3)
+            | (1u64 << 4)
+            | (1u64 << 5)
+            | (1u64 << 6)
+            | (1u64 << 7);
 
         let expected = vertical | horizontal;
         assert_eq!(moves, expected);
@@ -157,26 +134,17 @@ mod tests {
         let white_pieces = white_rooks | white_pawns;
         let black_pieces = black_pawns;
 
-        let moves = get_rook_moves(
-            27,
-            white_rooks,
-            0,
-            white_pieces,
-            black_pieces,
-            Color::White,
-        );
+        let moves = get_rook_moves(27, white_rooks, 0, white_pieces, black_pieces, Color::White);
 
-        let horizontal = 
-            (1u64 << 24) |
-            (1u64 << 25) |
-            (1u64 << 26) |
-            (1u64 << 28) |
-            (1u64 << 29) |
-            (1u64 << 30) |
-            (1u64 << 31);  
+        let horizontal = (1u64 << 24)
+            | (1u64 << 25)
+            | (1u64 << 26)
+            | (1u64 << 28)
+            | (1u64 << 29)
+            | (1u64 << 30)
+            | (1u64 << 31);
 
-        let vertical = 
-            1u64 << 35;  
+        let vertical = 1u64 << 35;
 
         let expected = horizontal | vertical;
         assert_eq!(moves, expected);
@@ -188,32 +156,23 @@ mod tests {
         let white_pieces = 0;
         let black_pieces = black_rooks;
 
-        let moves = get_rook_moves(
-            35,
-            0,
-            black_rooks,
-            white_pieces,
-            black_pieces,
-            Color::Black,
-        );
+        let moves = get_rook_moves(35, 0, black_rooks, white_pieces, black_pieces, Color::Black);
 
-        let vertical = 
-            (1u64 << 3) |
-            (1u64 << 11) |
-            (1u64 << 19) |
-            (1u64 << 27) |
-            (1u64 << 43) |
-            (1u64 << 51) |
-            (1u64 << 59);  
+        let vertical = (1u64 << 3)
+            | (1u64 << 11)
+            | (1u64 << 19)
+            | (1u64 << 27)
+            | (1u64 << 43)
+            | (1u64 << 51)
+            | (1u64 << 59);
 
-        let horizontal = 
-            (1u64 << 32) |
-            (1u64 << 33) |
-            (1u64 << 34) |
-            (1u64 << 36) |
-            (1u64 << 37) |
-            (1u64 << 38) |
-            (1u64 << 39);  
+        let horizontal = (1u64 << 32)
+            | (1u64 << 33)
+            | (1u64 << 34)
+            | (1u64 << 36)
+            | (1u64 << 37)
+            | (1u64 << 38)
+            | (1u64 << 39);
 
         let expected = vertical | horizontal;
         assert_eq!(moves, expected);
