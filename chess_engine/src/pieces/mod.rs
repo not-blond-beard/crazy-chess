@@ -4,3 +4,4 @@ pub mod knight;
 pub mod bishop;
 pub mod rook; 
 pub mod king; 
+pub mod queen; 
