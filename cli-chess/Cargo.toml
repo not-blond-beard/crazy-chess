@@ -5,4 +5,4 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4.0", features = ["derive"] }
-chess_engine = { path = "../chess_engine" }
+chess-engine = { path = "../chess-engine" }
