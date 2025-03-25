@@ -27,12 +27,6 @@ pub struct Board {
 
 impl Default for Board {
     fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl Board {
-    pub fn new() -> Self {
         Self {
             white_pawns: constants::RANK_2,
             black_pawns: constants::RANK_7,
@@ -48,6 +42,12 @@ impl Board {
             black_queens: 0x0800_0000_0000_0000,  // d8
             side_to_move: Color::White,
         }
+    }
+}
+
+impl Board {
+    pub fn new() -> Self {
+        Self::default()
     }
 
     pub fn print(&self) {
