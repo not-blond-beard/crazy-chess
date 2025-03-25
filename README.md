@@ -9,7 +9,7 @@ Crazy Chess is a chess variant designed for competitive play with unique charact
 Players choose unique characters, each with distinct skills, and make **premove** actions to gain an advantage. Points earned can be used to activate special abilities
 
 The project is still in its early stages, and development will progress over time.  
-For more details on the game design, check out the [Planning Document](https://github.com/not-blond-beard/crazy-chess/wiki/Planning).  
+For more details on the game design, check out the [Game Design Document](https://github.com/not-blond-beard/crazy-chess/wiki/Game-Design).  
 
 ## Business Model  
 
