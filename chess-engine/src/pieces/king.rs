@@ -48,7 +48,7 @@ pub fn get_king_moves(
         let new_file = file as i32 + file_delta;
         let new_rank = rank as i32 + rank_delta;
 
-        if new_file < 0 || new_file > 7 || new_rank < 0 || new_rank > 7 {
+        if !(0..=7).contains(&new_file) || !(0..=7).contains(&new_rank) {
             continue;
         }
 

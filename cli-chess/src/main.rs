@@ -18,7 +18,7 @@ fn algebraic_to_index(notation: &str) -> Option<usize> {
         return None;
     }
 
-    let file = notation.chars().nth(0)?;
+    let file = notation.chars().next()?;
     let rank = notation.chars().nth(1)?;
 
     if !('a'..='h').contains(&file) || !('1'..='8').contains(&rank) {

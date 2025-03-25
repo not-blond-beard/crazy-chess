@@ -25,6 +25,12 @@ pub struct Board {
     pub side_to_move: Color,
 }
 
+impl Default for Board {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Board {
     pub fn new() -> Self {
         Self {
@@ -77,12 +83,10 @@ impl Board {
                     " ♕ "
                 } else if self.black_queens & mask != 0 {
                     " ♛ "
+                } else if is_dark_square {
+                    "░░░"
                 } else {
-                    if is_dark_square {
-                        "░░░"
-                    } else {
-                        "   "
-                    }
+                    "   "
                 };
 
                 print!("{}", symbol);

@@ -147,26 +147,24 @@ fn simulate_move(board: &Board, from: usize, to: usize) -> Board {
                 new_board.white_kings &= !from_bb;
                 new_board.white_kings |= to_bb;
             }
-        } else {
-            if new_board.black_pawns & from_bb != 0 {
-                new_board.black_pawns &= !from_bb;
-                new_board.black_pawns |= to_bb;
-            } else if new_board.black_knights & from_bb != 0 {
-                new_board.black_knights &= !from_bb;
-                new_board.black_knights |= to_bb;
-            } else if new_board.black_bishops & from_bb != 0 {
-                new_board.black_bishops &= !from_bb;
-                new_board.black_bishops |= to_bb;
-            } else if new_board.black_rooks & from_bb != 0 {
-                new_board.black_rooks &= !from_bb;
-                new_board.black_rooks |= to_bb;
-            } else if new_board.black_queens & from_bb != 0 {
-                new_board.black_queens &= !from_bb;
-                new_board.black_queens |= to_bb;
-            } else if new_board.black_kings & from_bb != 0 {
-                new_board.black_kings &= !from_bb;
-                new_board.black_kings |= to_bb;
-            }
+        } else if new_board.black_pawns & from_bb != 0 {
+            new_board.black_pawns &= !from_bb;
+            new_board.black_pawns |= to_bb;
+        } else if new_board.black_knights & from_bb != 0 {
+            new_board.black_knights &= !from_bb;
+            new_board.black_knights |= to_bb;
+        } else if new_board.black_bishops & from_bb != 0 {
+            new_board.black_bishops &= !from_bb;
+            new_board.black_bishops |= to_bb;
+        } else if new_board.black_rooks & from_bb != 0 {
+            new_board.black_rooks &= !from_bb;
+            new_board.black_rooks |= to_bb;
+        } else if new_board.black_queens & from_bb != 0 {
+            new_board.black_queens &= !from_bb;
+            new_board.black_queens |= to_bb;
+        } else if new_board.black_kings & from_bb != 0 {
+            new_board.black_kings &= !from_bb;
+            new_board.black_kings |= to_bb;
         }
     }
 

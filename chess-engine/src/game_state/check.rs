@@ -35,7 +35,7 @@ fn check_pawn_attack(board: &Board, king_pos: usize, king_color: Color) -> bool 
 
     match king_color {
         Color::White => {
-            let attack_pos = vec![
+            let attack_pos = [
                 if king_file > 0 && king_rank < 7 {
                     Some(king_pos + 7)
                 } else {
@@ -56,7 +56,7 @@ fn check_pawn_attack(board: &Board, king_pos: usize, king_color: Color) -> bool 
             }
         }
         Color::Black => {
-            let attack_pos = vec![
+            let attack_pos = [
                 if king_file > 0 && king_rank > 0 {
                     Some(king_pos - 9)
                 } else {
@@ -105,7 +105,7 @@ fn check_knight_attack(board: &Board, king_pos: usize, king_color: Color) -> boo
         let new_file = king_file as i32 + file_offset;
         let new_rank = king_rank as i32 + rank_offset;
 
-        if new_file >= 0 && new_file < 8 && new_rank >= 0 && new_rank < 8 {
+        if (0..8).contains(&new_file) && (0..8).contains(&new_rank) {
             let pos = (new_rank as usize) * 8 + (new_file as usize);
             let pos_bb = square_to_bitboard(pos);
 
@@ -138,7 +138,7 @@ fn check_bishop_attack(board: &Board, king_pos: usize, king_color: Color) -> boo
         let mut curr_file = king_file as i32 + file_dir;
         let mut curr_rank = king_rank as i32 + rank_dir;
 
-        while curr_file >= 0 && curr_file < 8 && curr_rank >= 0 && curr_rank < 8 {
+        while (0..8).contains(&curr_file) && (0..8).contains(&curr_rank) {
             let pos = (curr_rank as usize) * 8 + (curr_file as usize);
             let pos_bb = square_to_bitboard(pos);
 
@@ -177,7 +177,7 @@ fn check_rook_attack(board: &Board, king_pos: usize, king_color: Color) -> bool 
         let mut curr_file = king_file as i32 + file_dir;
         let mut curr_rank = king_rank as i32 + rank_dir;
 
-        while curr_file >= 0 && curr_file < 8 && curr_rank >= 0 && curr_rank < 8 {
+        while (0..8).contains(&curr_file) && (0..8).contains(&curr_rank) {
             let pos = (curr_rank as usize) * 8 + (curr_file as usize);
             let pos_bb = square_to_bitboard(pos);
 

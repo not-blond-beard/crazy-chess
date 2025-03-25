@@ -43,7 +43,7 @@ pub fn get_rook_moves(
             curr_file += file_delta;
             curr_rank += rank_delta;
 
-            if curr_file < 0 || curr_file > 7 || curr_rank < 0 || curr_rank > 7 {
+            if !(0..=7).contains(&curr_file) || !(0..=7).contains(&curr_rank) {
                 break;
             }
 

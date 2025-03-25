@@ -72,12 +72,10 @@ pub fn get_knight_moves(
         },
     ];
 
-    for target_opt in possible_moves.iter() {
-        if let Some(target) = target_opt {
-            let target_bb = square_to_bitboard(*target);
-            if target_bb & own_pieces == 0 {
-                moves |= target_bb;
-            }
+    for target in possible_moves.iter().flatten() {
+        let target_bb = square_to_bitboard(*target);
+        if target_bb & own_pieces == 0 {
+            moves |= target_bb;
         }
     }
 
