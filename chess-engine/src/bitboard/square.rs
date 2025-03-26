@@ -1,4 +1,4 @@
-use std::ops::{BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign};
+use std::ops::{BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Square {
@@ -264,5 +264,14 @@ impl BitXorAssign<Square> for u64 {
         let lhs_u64: u64 = *self;
         let rhs_u64: u64 = rhs.into();
         *self = lhs_u64 ^ rhs_u64;
+    }
+}
+
+impl Not for Square {
+    type Output = u64;
+
+    fn not(self) -> Self::Output {
+        let value: u64 = self.into();
+        !value
     }
 }

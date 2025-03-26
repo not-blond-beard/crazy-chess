@@ -4,22 +4,20 @@ use crate::pieces::piece_type::Color;
 
 #[derive(Debug, Clone, Default)]
 pub struct BitBoard {
-    board: u64
+    board: u64,
 }
 
 impl BitBoard {
     pub fn new() -> Self {
         Self::default()
     }
-    
+
     pub fn full() -> Self {
         Self::init(UNIVERSE)
     }
 
     pub fn init(board: u64) -> Self {
-        Self {
-            board
-        }
+        Self { board }
     }
 
     pub fn rank(rank: u8) -> Self {
@@ -55,11 +53,11 @@ impl BitBoard {
         self.board & square != 0
     }
 
-    pub fn set(&mut self, location: u64) {
-        self.board |= location;
+    pub fn set(&mut self, square: Square) {
+        self.board |= square;
     }
-    
-    pub fn unset(&mut self, location: u64) {
-        self.board &= !location;
+
+    pub fn unset(&mut self, square: Square) {
+        self.board &= !square;
     }
 }
