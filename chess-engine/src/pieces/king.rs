@@ -29,7 +29,7 @@ pub fn get_king_moves(
     }
 
     let mut moves = 0u64;
-    
+
     let directions = [
         (0, 1),
         (1, 1),
@@ -48,7 +48,7 @@ pub fn get_king_moves(
         let new_file = file as i32 + file_delta;
         let new_rank = rank as i32 + rank_delta;
 
-        if new_file < 0 || new_file > 7 || new_rank < 0 || new_rank > 7 {
+        if !(0..=7).contains(&new_file) || !(0..=7).contains(&new_rank) {
             continue;
         }
 
@@ -75,24 +75,16 @@ mod tests {
         let white_pieces = white_kings;
         let black_pieces = 0;
 
-        let moves = get_king_moves(
-            27,
-            white_kings,
-            0,
-            white_pieces,
-            black_pieces,
-            Color::White,
-        );
+        let moves = get_king_moves(27, white_kings, 0, white_pieces, black_pieces, Color::White);
 
-        let expected = 
-            (1u64 << 18) |
-            (1u64 << 19) |
-            (1u64 << 20) |
-            (1u64 << 26) |
-            (1u64 << 28) |
-            (1u64 << 34) |
-            (1u64 << 35) |
-            (1u64 << 36);
+        let expected = (1u64 << 18)
+            | (1u64 << 19)
+            | (1u64 << 20)
+            | (1u64 << 26)
+            | (1u64 << 28)
+            | (1u64 << 34)
+            | (1u64 << 35)
+            | (1u64 << 36);
 
         assert_eq!(moves, expected);
     }
@@ -103,19 +95,9 @@ mod tests {
         let white_pieces = white_kings;
         let black_pieces = 0;
 
-        let moves = get_king_moves(
-            0,
-            white_kings,
-            0,
-            white_pieces,
-            black_pieces,
-            Color::White,
-        );
+        let moves = get_king_moves(0, white_kings, 0, white_pieces, black_pieces, Color::White);
 
-        let expected = 
-            (1u64 << 1) |
-            (1u64 << 8) |
-            (1u64 << 9);
+        let expected = (1u64 << 1) | (1u64 << 8) | (1u64 << 9);
 
         assert_eq!(moves, expected);
     }
@@ -129,21 +111,9 @@ mod tests {
         let white_pieces = white_kings | white_pawns;
         let black_pieces = black_pawns;
 
-        let moves = get_king_moves(
-            27,
-            white_kings,
-            0,
-            white_pieces,
-            black_pieces,
-            Color::White,
-        );
+        let moves = get_king_moves(27, white_kings, 0, white_pieces, black_pieces, Color::White);
 
-        let expected = 
-            (1u64 << 26) |
-            (1u64 << 28) |
-            (1u64 << 34) |
-            (1u64 << 35) |
-            (1u64 << 36);
+        let expected = (1u64 << 26) | (1u64 << 28) | (1u64 << 34) | (1u64 << 35) | (1u64 << 36);
 
         assert_eq!(moves, expected);
     }
@@ -154,25 +124,17 @@ mod tests {
         let white_pieces = 0;
         let black_pieces = black_kings;
 
-        let moves = get_king_moves(
-            35,
-            0,
-            black_kings,
-            white_pieces,
-            black_pieces,
-            Color::Black,
-        );
+        let moves = get_king_moves(35, 0, black_kings, white_pieces, black_pieces, Color::Black);
 
-        let expected = 
-            (1u64 << 26) |
-            (1u64 << 27) |
-            (1u64 << 28) |
-            (1u64 << 34) |
-            (1u64 << 36) |
-            (1u64 << 42) |
-            (1u64 << 43) |
-            (1u64 << 44);
+        let expected = (1u64 << 26)
+            | (1u64 << 27)
+            | (1u64 << 28)
+            | (1u64 << 34)
+            | (1u64 << 36)
+            | (1u64 << 42)
+            | (1u64 << 43)
+            | (1u64 << 44);
 
         assert_eq!(moves, expected);
     }
-} 
+}

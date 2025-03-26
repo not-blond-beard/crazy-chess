@@ -1,7 +1,7 @@
 use chess_engine::{
     board::Board,
-    pieces::{piece_type::{PieceType, MoveError, Color}},
     game_state::game_status::{get_game_status, GameStatus},
+    pieces::piece_type::{Color, MoveError, PieceType},
 };
 use clap::Parser;
 use std::io::{self, Write};
@@ -18,7 +18,7 @@ fn algebraic_to_index(notation: &str) -> Option<usize> {
         return None;
     }
 
-    let file = notation.chars().nth(0)?;
+    let file = notation.chars().next()?;
     let rank = notation.chars().nth(1)?;
 
     if !('a'..='h').contains(&file) || !('1'..='8').contains(&rank) {
@@ -177,14 +177,14 @@ fn run_interactive_mode() {
                 (Some(from), Some(to)) => match board.make_move(from, to) {
                     Ok(_) => {
                         println!("Moved from {} to {}", from_str, to_str);
-                        
+
                         match get_game_status(&board) {
                             GameStatus::Check => println!("Check!"),
                             GameStatus::Checkmate => println!("Checkmate! Game over."),
                             GameStatus::Stalemate => println!("Stalemate! Game ends in a draw."),
                             _ => {}
                         }
-                        
+
                         board.print();
                     }
                     Err(err) => display_move_error(err),

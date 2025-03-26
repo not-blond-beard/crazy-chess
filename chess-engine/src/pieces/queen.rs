@@ -1,6 +1,6 @@
 use crate::bitboard::operations::square_to_bitboard;
-use crate::pieces::piece_type::Color;
 use crate::pieces::bishop;
+use crate::pieces::piece_type::Color;
 use crate::pieces::rook;
 
 pub fn get_queen_moves(
@@ -30,7 +30,7 @@ pub fn get_queen_moves(
         black_pieces,
         side_to_move,
     );
-    
+
     let rook_moves = rook::get_rook_moves(
         from,
         from_bb,
@@ -62,36 +62,34 @@ mod tests {
             Color::White,
         );
 
-        let diagonal_moves = 
-            (1u64 << 0) |
-            (1u64 << 9) |
-            (1u64 << 18) |
-            (1u64 << 36) |
-            (1u64 << 45) |
-            (1u64 << 54) |
-            (1u64 << 63) |
-            (1u64 << 20) |
-            (1u64 << 13) |
-            (1u64 << 6) |
-            (1u64 << 34) |
-            (1u64 << 41) |
-            (1u64 << 48);
+        let diagonal_moves = (1u64 << 0)
+            | (1u64 << 9)
+            | (1u64 << 18)
+            | (1u64 << 36)
+            | (1u64 << 45)
+            | (1u64 << 54)
+            | (1u64 << 63)
+            | (1u64 << 20)
+            | (1u64 << 13)
+            | (1u64 << 6)
+            | (1u64 << 34)
+            | (1u64 << 41)
+            | (1u64 << 48);
 
-        let orthogonal_moves = 
-            (1u64 << 3) | 
-            (1u64 << 11) |
-            (1u64 << 19) |
-            (1u64 << 35) |
-            (1u64 << 43) |
-            (1u64 << 51) |
-            (1u64 << 59) |
-            (1u64 << 24) |
-            (1u64 << 25) |
-            (1u64 << 26) |
-            (1u64 << 28) |
-            (1u64 << 29) |
-            (1u64 << 30) |
-            (1u64 << 31);  
+        let orthogonal_moves = (1u64 << 3)
+            | (1u64 << 11)
+            | (1u64 << 19)
+            | (1u64 << 35)
+            | (1u64 << 43)
+            | (1u64 << 51)
+            | (1u64 << 59)
+            | (1u64 << 24)
+            | (1u64 << 25)
+            | (1u64 << 26)
+            | (1u64 << 28)
+            | (1u64 << 29)
+            | (1u64 << 30)
+            | (1u64 << 31);
 
         let expected = diagonal_moves | orthogonal_moves;
         assert_eq!(moves, expected);
@@ -103,39 +101,30 @@ mod tests {
         let white_pieces = white_queens;
         let black_pieces = 0;
 
-        let moves = get_queen_moves(
-            0,
-            white_queens,
-            0,
-            white_pieces,
-            black_pieces,
-            Color::White,
-        );
+        let moves = get_queen_moves(0, white_queens, 0, white_pieces, black_pieces, Color::White);
 
-        let diagonal_moves = 
-            (1u64 << 9) |
-            (1u64 << 18) |
-            (1u64 << 27) |
-            (1u64 << 36) |
-            (1u64 << 45) |
-            (1u64 << 54) |
-            (1u64 << 63);
+        let diagonal_moves = (1u64 << 9)
+            | (1u64 << 18)
+            | (1u64 << 27)
+            | (1u64 << 36)
+            | (1u64 << 45)
+            | (1u64 << 54)
+            | (1u64 << 63);
 
-        let orthogonal_moves = 
-            (1u64 << 8) |
-            (1u64 << 16) |
-            (1u64 << 24) |
-            (1u64 << 32) |
-            (1u64 << 40) |
-            (1u64 << 48) |
-            (1u64 << 56) |
-            (1u64 << 1) |
-            (1u64 << 2) |
-            (1u64 << 3) |
-            (1u64 << 4) |
-            (1u64 << 5) |
-            (1u64 << 6) |
-            (1u64 << 7);
+        let orthogonal_moves = (1u64 << 8)
+            | (1u64 << 16)
+            | (1u64 << 24)
+            | (1u64 << 32)
+            | (1u64 << 40)
+            | (1u64 << 48)
+            | (1u64 << 56)
+            | (1u64 << 1)
+            | (1u64 << 2)
+            | (1u64 << 3)
+            | (1u64 << 4)
+            | (1u64 << 5)
+            | (1u64 << 6)
+            | (1u64 << 7);
 
         let expected = diagonal_moves | orthogonal_moves;
         assert_eq!(moves, expected);
@@ -178,38 +167,36 @@ mod tests {
             Color::Black,
         );
 
-        let diagonal_moves = 
-            (1u64 << 8) |
-            (1u64 << 17) |
-            (1u64 << 26) |
-            (1u64 << 44) |
-            (1u64 << 53) |
-            (1u64 << 62) |
-            (1u64 << 28) |
-            (1u64 << 21) |
-            (1u64 << 14) |
-            (1u64 << 7) |
-            (1u64 << 42) |
-            (1u64 << 49) |
-            (1u64 << 56);
+        let diagonal_moves = (1u64 << 8)
+            | (1u64 << 17)
+            | (1u64 << 26)
+            | (1u64 << 44)
+            | (1u64 << 53)
+            | (1u64 << 62)
+            | (1u64 << 28)
+            | (1u64 << 21)
+            | (1u64 << 14)
+            | (1u64 << 7)
+            | (1u64 << 42)
+            | (1u64 << 49)
+            | (1u64 << 56);
 
-        let orthogonal_moves = 
-            (1u64 << 3) |
-            (1u64 << 11) |
-            (1u64 << 19) |
-            (1u64 << 27) |
-            (1u64 << 43) |
-            (1u64 << 51) |
-            (1u64 << 59) |
-            (1u64 << 32) |
-            (1u64 << 33) |
-            (1u64 << 34) |
-            (1u64 << 36) |
-            (1u64 << 37) |
-            (1u64 << 38) |
-            (1u64 << 39);
+        let orthogonal_moves = (1u64 << 3)
+            | (1u64 << 11)
+            | (1u64 << 19)
+            | (1u64 << 27)
+            | (1u64 << 43)
+            | (1u64 << 51)
+            | (1u64 << 59)
+            | (1u64 << 32)
+            | (1u64 << 33)
+            | (1u64 << 34)
+            | (1u64 << 36)
+            | (1u64 << 37)
+            | (1u64 << 38)
+            | (1u64 << 39);
 
         let expected = diagonal_moves | orthogonal_moves;
         assert_eq!(moves, expected);
     }
-} 
+}

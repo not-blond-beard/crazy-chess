@@ -2,12 +2,12 @@ use crate::bitboard::constants;
 use crate::bitboard::operations::square_to_bitboard;
 use crate::movement::validator;
 use crate::pieces::bishop;
+use crate::pieces::king;
 use crate::pieces::knight;
 use crate::pieces::pawn;
-use crate::pieces::rook;
-use crate::pieces::king;
-use crate::pieces::queen;
 use crate::pieces::piece_type::{Color, MoveError, PieceType};
+use crate::pieces::queen;
+use crate::pieces::rook;
 
 pub struct Board {
     pub white_pawns: u64,
@@ -25,8 +25,8 @@ pub struct Board {
     pub side_to_move: Color,
 }
 
-impl Board {
-    pub fn new() -> Self {
+impl Default for Board {
+    fn default() -> Self {
         Self {
             white_pawns: constants::RANK_2,
             black_pawns: constants::RANK_7,
@@ -42,6 +42,12 @@ impl Board {
             black_queens: 0x0800_0000_0000_0000,  // d8
             side_to_move: Color::White,
         }
+    }
+}
+
+impl Board {
+    pub fn new() -> Self {
+        Self::default()
     }
 
     pub fn print(&self) {
@@ -77,12 +83,10 @@ impl Board {
                     " ♕ "
                 } else if self.black_queens & mask != 0 {
                     " ♛ "
+                } else if is_dark_square {
+                    "░░░"
                 } else {
-                    if is_dark_square {
-                        "░░░"
-                    } else {
-                        "   "
-                    }
+                    "   "
                 };
 
                 print!("{}", symbol);
@@ -97,11 +101,21 @@ impl Board {
     }
 
     pub fn white_pieces(&self) -> u64 {
-        self.white_pawns | self.white_knights | self.white_bishops | self.white_rooks | self.white_kings | self.white_queens
+        self.white_pawns
+            | self.white_knights
+            | self.white_bishops
+            | self.white_rooks
+            | self.white_kings
+            | self.white_queens
     }
 
     pub fn black_pieces(&self) -> u64 {
-        self.black_pawns | self.black_knights | self.black_bishops | self.black_rooks | self.black_kings | self.black_queens
+        self.black_pawns
+            | self.black_knights
+            | self.black_bishops
+            | self.black_rooks
+            | self.black_kings
+            | self.black_queens
     }
 
     pub fn all_pieces(&self) -> u64 {
@@ -351,11 +365,11 @@ mod tests {
     #[test]
     fn test_bishop_move() {
         let mut board = Board::new();
-        
+
         board.white_bishops = 1u64 << 27;
         board.white_pawns = 0;
         board.black_pawns = 0;
-        
+
         assert!(board.make_move(27, 36).is_ok());
         assert_eq!(board.white_bishops & (1u64 << 36), 1u64 << 36);
         assert_eq!(board.white_bishops & (1u64 << 27), 0);
@@ -378,11 +392,11 @@ mod tests {
     #[test]
     fn test_rook_move() {
         let mut board = Board::new();
-        
+
         board.white_rooks = 1u64 << 27;
         board.white_pawns = 0;
         board.black_pawns = 0;
-        
+
         assert!(board.make_move(27, 31).is_ok());
         assert_eq!(board.white_rooks & (1u64 << 31), 1u64 << 31);
         assert_eq!(board.white_rooks & (1u64 << 27), 0);
@@ -444,11 +458,11 @@ mod tests {
     #[test]
     fn test_king_move() {
         let mut board = Board::new();
-        
+
         board.white_pawns &= !(1u64 << 12);
-        
+
         board.make_move(4, 12).unwrap();
-        
+
         assert_eq!(board.white_kings, 1u64 << 12);
         assert_eq!(board.side_to_move, Color::Black);
     }
@@ -456,12 +470,12 @@ mod tests {
     #[test]
     fn test_king_capture() {
         let mut board = Board::new();
-        
+
         board.white_pawns &= !(1u64 << 12);
         board.black_pawns = (board.black_pawns & !(1u64 << 52)) | (1u64 << 12);
-        
+
         board.make_move(4, 12).unwrap();
-        
+
         assert_eq!(board.white_kings, 1u64 << 12);
         assert_eq!(board.black_pawns & (1u64 << 12), 0);
         assert_eq!(board.side_to_move, Color::Black);
@@ -470,41 +484,41 @@ mod tests {
     #[test]
     fn test_queen_move() {
         let mut board = Board::new();
-        
+
         board.white_pawns &= !(1u64 << 11);
         board.white_queens = 1u64 << 3;
-        
+
         board.make_move(3, 19).unwrap();
-        
+
         assert_eq!(board.white_queens, 1u64 << 19);
         assert_eq!(board.side_to_move, Color::Black);
     }
-    
+
     #[test]
     fn test_queen_capture() {
         let mut board = Board::new();
-        
+
         board.white_pawns &= !(1u64 << 11);
         board.black_pawns = (board.black_pawns & !(1u64 << 51)) | (1u64 << 11);
         board.white_queens = 1u64 << 3;
-        
+
         board.make_move(3, 11).unwrap();
-        
+
         assert_eq!(board.white_queens, 1u64 << 11);
         assert_eq!(board.black_pawns & (1u64 << 11), 0);
         assert_eq!(board.side_to_move, Color::Black);
     }
-    
+
     #[test]
     fn test_queen_diagonal_move() {
         let mut board = Board::new();
-        
+
         board.white_pawns &= !(1u64 << 10);
         board.white_pawns &= !(1u64 << 12);
         board.white_queens = 1u64 << 3;
-        
+
         board.make_move(3, 10).unwrap();
-        
+
         assert_eq!(board.white_queens, 1u64 << 10);
         assert_eq!(board.side_to_move, Color::Black);
     }

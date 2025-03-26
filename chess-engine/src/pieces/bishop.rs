@@ -29,13 +29,8 @@ pub fn get_bishop_moves(
     }
 
     let mut moves = 0u64;
-    
-    let directions = [
-        (1, 1),
-        (1, -1),
-        (-1, 1),
-        (-1, -1),
-    ];
+
+    let directions = [(1, 1), (1, -1), (-1, 1), (-1, -1)];
 
     let file = from % 8;
     let rank = from / 8;
@@ -48,7 +43,7 @@ pub fn get_bishop_moves(
             curr_file += file_delta;
             curr_rank += rank_delta;
 
-            if curr_file < 0 || curr_file > 7 || curr_rank < 0 || curr_rank > 7 {
+            if !(0..=7).contains(&curr_file) || !(0..=7).contains(&curr_rank) {
                 break;
             }
 
@@ -89,20 +84,19 @@ mod tests {
             Color::White,
         );
 
-        let expected = 
-            (1u64 << 18) | 
-            (1u64 << 9) |  
-            (1u64 << 0) |  
-            (1u64 << 36) | 
-            (1u64 << 45) | 
-            (1u64 << 54) | 
-            (1u64 << 63) | 
-            (1u64 << 20) | 
-            (1u64 << 13) | 
-            (1u64 << 6) |  
-            (1u64 << 34) | 
-            (1u64 << 41) | 
-            (1u64 << 48);  
+        let expected = (1u64 << 18)
+            | (1u64 << 9)
+            | (1u64 << 0)
+            | (1u64 << 36)
+            | (1u64 << 45)
+            | (1u64 << 54)
+            | (1u64 << 63)
+            | (1u64 << 20)
+            | (1u64 << 13)
+            | (1u64 << 6)
+            | (1u64 << 34)
+            | (1u64 << 41)
+            | (1u64 << 48);
 
         assert_eq!(moves, expected);
     }
@@ -122,14 +116,13 @@ mod tests {
             Color::White,
         );
 
-        let expected = 
-            (1u64 << 9) |  
-            (1u64 << 18) | 
-            (1u64 << 27) | 
-            (1u64 << 36) | 
-            (1u64 << 45) | 
-            (1u64 << 54) | 
-            (1u64 << 63);  
+        let expected = (1u64 << 9)
+            | (1u64 << 18)
+            | (1u64 << 27)
+            | (1u64 << 36)
+            | (1u64 << 45)
+            | (1u64 << 54)
+            | (1u64 << 63);
 
         assert_eq!(moves, expected);
     }
@@ -152,14 +145,13 @@ mod tests {
             Color::White,
         );
 
-        let expected = 
-            (1u64 << 20) | 
-            (1u64 << 13) | 
-            (1u64 << 6) |  
-            (1u64 << 36) | 
-            (1u64 << 34) | 
-            (1u64 << 41) | 
-            (1u64 << 48);  
+        let expected = (1u64 << 20)
+            | (1u64 << 13)
+            | (1u64 << 6)
+            | (1u64 << 36)
+            | (1u64 << 34)
+            | (1u64 << 41)
+            | (1u64 << 48);
 
         assert_eq!(moves, expected);
     }
@@ -179,20 +171,19 @@ mod tests {
             Color::Black,
         );
 
-        let expected = 
-            (1u64 << 26) | 
-            (1u64 << 17) | 
-            (1u64 << 8) |  
-            (1u64 << 44) | 
-            (1u64 << 53) | 
-            (1u64 << 62) | 
-            (1u64 << 28) | 
-            (1u64 << 21) | 
-            (1u64 << 14) | 
-            (1u64 << 7) |  
-            (1u64 << 42) | 
-            (1u64 << 49) | 
-            (1u64 << 56);  
+        let expected = (1u64 << 26)
+            | (1u64 << 17)
+            | (1u64 << 8)
+            | (1u64 << 44)
+            | (1u64 << 53)
+            | (1u64 << 62)
+            | (1u64 << 28)
+            | (1u64 << 21)
+            | (1u64 << 14)
+            | (1u64 << 7)
+            | (1u64 << 42)
+            | (1u64 << 49)
+            | (1u64 << 56);
 
         assert_eq!(moves, expected);
     }
