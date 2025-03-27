@@ -404,6 +404,16 @@ mod tests {
     }
 
     #[test]
+    fn test_rook_castling() {
+        let mut board = Board::new();
+
+        board.white_rooks = 0x0000_0000_0000_0001;
+        board.white_kings = 0x0000_0000_0000_0008;
+        board.white_pawns = 0;
+        board.black_pawns = 0;
+    }
+
+    #[test]
     fn test_rook_capture() {
         let mut board = Board::new();
 
