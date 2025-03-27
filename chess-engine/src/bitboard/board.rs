@@ -1,8 +1,9 @@
 use crate::bitboard::constants::*;
 use crate::bitboard::square::Square;
 use crate::pieces::piece_type::Color;
+use std::ops::BitOr;
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Copy, Clone, Default)]
 pub struct BitBoard {
     board: u64,
 }
@@ -59,5 +60,12 @@ impl BitBoard {
 
     pub fn unset(&mut self, square: Square) {
         self.board &= !square;
+    }
+}
+
+impl BitOr<BitBoard> for u64 {
+    type Output = u64;
+    fn bitor(self, rhs: BitBoard) -> Self::Output {
+        self | rhs.board
     }
 }

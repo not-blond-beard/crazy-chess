@@ -14,6 +14,12 @@ pub enum PieceType {
     Queen,
 }
 
+impl PieceType {
+    pub fn default_board() -> u64 {
+        0
+    }
+}
+
 #[derive(Debug, PartialEq)]
 pub enum MoveError {
     NoPieceAtSource,
