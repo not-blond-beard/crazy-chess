@@ -1,5 +1,43 @@
 use crate::bitboard::operations::square_to_bitboard;
+use crate::bitboard::Square;
+use crate::pieces::piece::Piece;
 use crate::pieces::piece_type::Color;
+
+pub struct Pawn {
+    color: String,
+    has_moved: bool,
+}
+
+impl Pawn {
+    fn new(color: String) -> Self {
+        Self {
+            color,
+            has_moved: false,
+        }
+    }
+}
+
+impl Piece for Pawn {
+    fn name(&self) -> &str {
+        "pawn"
+    }
+
+    fn color(&self) -> &str {
+        self.color.as_str()
+    }
+
+    fn has_moved(&self) -> bool {
+        self.has_moved
+    }
+
+    fn mark_as_moved(&mut self) {
+        self.has_moved = true
+    }
+
+    fn moveable_squares(&self, from: Square) -> Vec<Square> {
+        todo!()
+    }
+}
 
 pub fn get_pawn_moves(from: usize, white_pawns: u64, black_pawns: u64, side_to_move: Color) -> u64 {
     let from_bb = square_to_bitboard(from);
